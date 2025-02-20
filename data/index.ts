@@ -1,5 +1,7 @@
+import { link } from "fs";
+
 export const navItems = [
-  { name: "About", link: "#about" },
+  { name: "About", link: "" },
   { name: "Projects", link: "#projects" },
   { name: "Testimonials", link: "#testimonials" },
   { name: "Contact", link: "#contact" },
@@ -49,7 +51,7 @@ export const gridItems = [
 
   {
     id: 5,
-    title: "Currently building a JS Animation library",
+    title: "Currently learning a Python",
     description: "The Inside Scoop",
     className: "md:col-span-3 md:row-span-2",
     imgClassName: "absolute right-0 bottom-0 md:w-96 w-60",
@@ -74,7 +76,7 @@ export const projects = [
     id: 1,
     title: "3D Solar System Planets to Explore",
     des: "Explore the wonders of our solar system with this captivating 3D simulation of the planets using Three.js.",
-    img: "/p1.svg",
+    img: "/project1.png",
     iconLists: ["/re.svg", "/tail.svg", "/ts.svg", "/three.svg", "/fm.svg"],
     link: "/ui.earth.com",
   },
@@ -82,7 +84,7 @@ export const projects = [
     id: 2,
     title: "Yoom - Video Conferencing App",
     des: "Simplify your video conferencing experience with Yoom. Seamlessly connect with colleagues and friends.",
-    img: "/p2.svg",
+    img: "/project2.png",
     iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/stream.svg", "/c.svg"],
     link: "/ui.yoom.com",
   },
@@ -90,7 +92,7 @@ export const projects = [
     id: 3,
     title: "AI Image SaaS - Canva Application",
     des: "A REAL Software-as-a-Service app with AI features and a payments and credits system using the latest tech stack.",
-    img: "/p3.svg",
+    img: "/project3.png",
     iconLists: ["/re.svg", "/tail.svg", "/ts.svg", "/three.svg", "/c.svg"],
     link: "/ui.aiimg.com",
   },
@@ -98,7 +100,7 @@ export const projects = [
     id: 4,
     title: "Animated Apple Iphone 3D Website",
     des: "Recreated the Apple iPhone 15 Pro website, combining GSAP animations and Three.js 3D effects..",
-    img: "/p4.svg",
+    img: "/project4.png",
     iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/three.svg", "/gsap.svg"],
     link: "/ui.apple.com",
   },
@@ -173,45 +175,124 @@ export const companies = [
 export const workExperience = [
   {
     id: 1,
-    title: "Frontend Engineer Intern",
-    desc: "Assisted in the development of a web-based platform using React.js, enhancing interactivity.",
+    title: "Full Stack Developer - FISTA Solutions",
+    desc: "Assisted in the development of a web-based platform using Next.js, enhancing interactivity.",
     className: "md:col-span-2",
     thumbnail: "/exp1.svg",
   },
   {
     id: 2,
-    title: "Mobile App Dev - JSM Tech",
-    desc: "Designed and developed mobile app for both iOS & Android platforms using React Native.",
+    title: "Web Developer Intern - Comsats University",
+    desc: "Design and develop web applications in a team environment, using modern technologies.",
     className: "md:col-span-2", // change to md:col-span-2
     thumbnail: "/exp2.svg",
   },
   {
     id: 3,
-    title: "Freelance App Dev Project",
-    desc: "Led the dev of a mobile app for a client, from initial concept to deployment on app stores.",
+    title: "Web Developer Intern - Encryptix",
+    desc: "Design and develop web applications in a team environment, using modern technologies.",
     className: "md:col-span-2", // change to md:col-span-2
     thumbnail: "/exp3.svg",
   },
-  {
-    id: 4,
-    title: "Lead Frontend Developer",
-    desc: "Developed and maintained user-facing features using modern frontend technologies.",
-    className: "md:col-span-2",
-    thumbnail: "/exp4.svg",
-  },
+  // {
+  //   id: 4,
+  //   title: "Lead Frontend Developer",
+  //   desc: "Developed and maintained user-facing features using modern frontend technologies.",
+  //   className: "md:col-span-2",
+  //   thumbnail: "/exp4.svg",
+  // },
 ];
 
 export const socialMedia = [
   {
     id: 1,
     img: "/git.svg",
+    link: "https://github.com/Noman0114",
   },
   {
     id: 2,
     img: "/twit.svg",
+    link: "",
   },
   {
     id: 3,
     img: "/link.svg",
+    link: "https://www.linkedin.com/in/numan-ahmad-b09a31276/",
+  },
+];
+export const languagesAndTools = [
+  {
+    name: "JavaScript",
+    icon: "/icon/java-script.png",
+  },
+  {
+    name: "TypeScript",
+    icon: "/icon/typescript.png",
+  },
+  {
+    name: "React",
+    icon: "/re.svg",
+  },
+  {
+    name: "Node.js",
+    icon: "/icon/nodejs.png",
+  },
+  {
+    name: "express.js",
+    icon: "/icon/png-transparent-mean-solution-stack-express-js-node-js-javascript-github-text-trademark-logo-thumbnail.png",
+  },
+  {
+    name: "Python",
+    icon: "/icon/python.png",
+  },
+  {
+    name: " CSS",
+    icon: "/icon/css-3.png",
+  },
+  {
+    name: "Tailwind CSS",
+    icon: "/tail.svg",
+  },
+  {
+    name: "Bootstrap CSS",
+    icon: "/icon/boostrap.svg",
+  },
+  {
+    name: "MongoDB",
+    icon: "/icon/MongoDB-Logo.png",
+  },
+  {
+    name: "firebase",
+    icon: "/icon/firebase.svg",
+  },
+  {
+    name: "mysql",
+    icon: "/icon/mysql.svg",
+  },
+  {
+    name: "postgreSQL",
+    icon: "/icon/postgresql.svg",
+  },
+  {
+    name: "Docker",
+    icon: "/icon/docker.png",
+  },
+
+  {
+    name: "AWS",
+    icon: "/icon/aws.svg",
+  },
+  {
+    name: "Azure",
+    icon: "/icon/azure.png",
+  },
+  {
+    name: "Git",
+    icon: "/git.svg",
+  },
+
+  {
+    name: "NextJS",
+    icon: "/next.svg",
   },
 ];
