@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import type React from "react";
+import type React from 'react';
 
-import { useState, useEffect, useRef } from "react";
-import { FaComments, FaTimes } from "react-icons/fa";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { useState, useEffect, useRef } from 'react';
+import { FaComments, FaTimes } from 'react-icons/fa';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY!);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
 const ChatIcon = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState<
-    { type: "user" | "ai"; message: string }[]
+    { type: 'user' | 'ai'; message: string }[]
   >([]);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
@@ -26,8 +26,8 @@ const ChatIcon = () => {
     if (!message.trim() || isLoading) return;
 
     const userMessage = message;
-    setMessage("");
-    setChatHistory((prev) => [...prev, { type: "user", message: userMessage }]);
+    setMessage('');
+    setChatHistory((prev) => [...prev, { type: 'user', message: userMessage }]);
     setIsLoading(true);
 
     try {
@@ -35,14 +35,14 @@ const ChatIcon = () => {
       const response = await result.response;
       const text = response.text();
 
-      setChatHistory((prev) => [...prev, { type: "ai", message: text }]);
+      setChatHistory((prev) => [...prev, { type: 'ai', message: text }]);
     } catch (error) {
-      console.error("Error generating response:", error);
+      console.error('Error generating response:', error);
       setChatHistory((prev) => [
         ...prev,
         {
-          type: "ai",
-          message: "Sorry, I encountered an error. Please try again.",
+          type: 'ai',
+          message: 'Sorry, I encountered an error. Please try again.',
         },
       ]);
     } finally {
@@ -60,11 +60,11 @@ const ChatIcon = () => {
     };
 
     if (isModalOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isModalOpen]);
 
@@ -82,8 +82,8 @@ const ChatIcon = () => {
         <div
           className={`absolute bottom-full mb-2 right-0 bg-gray-900 bg-opacity-90 text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap backdrop-blur-sm transition-all duration-300 ease-in-out ${
             isHovering && !isModalOpen
-              ? "opacity-100 transform translate-y-0"
-              : "opacity-0 transform translate-y-2 pointer-events-none"
+              ? 'opacity-100 transform translate-y-0'
+              : 'opacity-0 transform translate-y-2 pointer-events-none'
           }`}
         >
           Chat with Personal AI
@@ -95,12 +95,12 @@ const ChatIcon = () => {
           <div
             ref={modalRef}
             className={`bg-gray-900 bg-opacity-40 backdrop-blur-xl rounded-lg w-[400px] h-[600px] text-white shadow-2xl border border-gray-700 border-opacity-50 flex flex-col transition-all duration-300 ease-in-out ${
-              isAnimating ? "scale-95 opacity-0" : "scale-100 opacity-100"
+              isAnimating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'
             }`}
           >
             <div
               className={`bg-gray-900 bg-opacity-40 backdrop-blur-xl rounded-lg w-[400px] h-[600px] text-white shadow-2xl border border-gray-700 border-opacity-50 flex flex-col transition-all duration-300 ease-in-out ${
-                isAnimating ? "scale-95 opacity-0" : "scale-100 opacity-100"
+                isAnimating ? 'scale-95 opacity-0' : 'scale-100 opacity-100'
               }`}
             >
               {/* Header */}
@@ -122,9 +122,9 @@ const ChatIcon = () => {
                   <div
                     key={index}
                     className={`p-3 rounded-lg ${
-                      chat.type === "user"
-                        ? "bg-blue-600 bg-opacity-70 ml-auto mr-2 max-w-[80%]"
-                        : "bg-gray-700 bg-opacity-70 mr-auto ml-2 max-w-[80%]"
+                      chat.type === 'user'
+                        ? 'bg-blue-600 bg-opacity-70 ml-auto mr-2 max-w-[80%]'
+                        : 'bg-gray-700 bg-opacity-70 mr-auto ml-2 max-w-[80%]'
                     }`}
                   >
                     {chat.message}
@@ -151,7 +151,7 @@ const ChatIcon = () => {
                     disabled={isLoading}
                     className="bg-blue-600 bg-opacity-70 hover:bg-opacity-100 text-white rounded-lg px-4 py-2 whitespace-nowrap transition-colors duration-200 disabled:opacity-50"
                   >
-                    {"Send"}
+                    {'Send'}
                   </button>
                 </div>
               </form>

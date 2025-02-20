@@ -1,15 +1,15 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "./provider";
-import MouseFollower from "@/components/MouseFollower";
-import ChatIcon from "@/components/ChatIcon"; // Add this import (you'll need to create this component)
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { ThemeProvider } from './provider';
+import MouseFollower from '@/components/MouseFollower';
+import ChatIcon from '@/components/ChatIcon'; // Add this import (you'll need to create this component)
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Numan's Portfolio",
-  description: "Modern & Minimal JS Mastery Portfolio",
+  title: 'Numan\'s Portfolio',
+  description: 'Modern & Minimal JS Mastery Portfolio',
 };
 
 export default function RootLayout({

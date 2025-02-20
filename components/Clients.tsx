@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
-import { languagesAndTools } from "@/data";
-import { InfiniteMovingCards } from "./ui/InfiniteCards";
+import { languagesAndTools } from '@/data';
+import { InfiniteMovingCards } from './ui/InfiniteCards';
 
 const Clients = () => {
   return (

@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { FaLocationArrow } from "react-icons/fa6";
+import { FaLocationArrow } from 'react-icons/fa6';
 
-import { projects } from "@/data";
-import { PinContainer } from "./ui/Pin";
+import { projects } from '@/data';
+import { PinContainer } from './ui/Pin';
 
 const RecentProjects = () => {
   return (
     <div className="py-20" id="projects">
       <h1 className="heading">
-        A small selection of{" "}
+        A small selection of{' '}
         <span className="text-purple">recent projects</span>
       </h1>
       <div className="flex flex-wrap items-center justify-center p-4 gap-16 mt-10">
@@ -25,7 +25,7 @@ const RecentProjects = () => {
               <div className="relative flex items-center justify-center sm:w-96 w-[80vw] overflow-hidden h-[20vh] lg:h-[30vh] mb-10">
                 <div
                   className="relative w-full h-full overflow-hidden lg:rounded-3xl"
-                  style={{ backgroundColor: "#13162D" }}
+                  style={{ backgroundColor: '#13162D' }}
                 >
                   <img src="/bg.png" alt="bgimg" />
                 </div>
@@ -43,8 +43,8 @@ const RecentProjects = () => {
               <p
                 className="lg:text-xl lg:font-normal font-light text-sm line-clamp-2"
                 style={{
-                  color: "#BEC1DD",
-                  margin: "1vh 0",
+                  color: '#BEC1DD',
+                  margin: '1vh 0',
                 }}
               >
                 {item.des}
