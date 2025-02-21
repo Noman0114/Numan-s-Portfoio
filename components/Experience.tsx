@@ -1,7 +1,8 @@
-import React from 'react';
+'use client'
+import React from "react";
 
-import { workExperience } from '@/data';
-import { Button } from './ui/MovingBorders';
+import { workExperience } from "@/data";
+import { Button } from "./ui/MovingBorders";
 
 const Experience = () => {
   return (
@@ -20,11 +21,11 @@ const Experience = () => {
             style={{
               //   add these two
               //   you can generate the color from here https://cssgradient.io/
-              background: 'rgb(4,7,29)',
+              background: "rgb(4,7,29)",
               backgroundColor:
-                'linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)',
+                "linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)",
               // add this border radius to make it more rounded so that the moving border is more realistic
-              borderRadius: 'calc(1.75rem* 0.96)',
+              borderRadius: `calc(1.75rem* 0.96)`,
             }}
             // remove bg-white dark:bg-slate-900
             className="flex-1 text-black dark:text-white border-neutral-200 dark:border-slate-800"
