@@ -34,9 +34,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* <MouseFollower /> */}
+          <MouseFollower />
           {children}
-          {/* <ChatIcon /> Add the chat icon component here */}
+          <ChatIcon /> 
         </ThemeProvider>
       </body>
     </html>
