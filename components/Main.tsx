@@ -17,7 +17,7 @@ const Main = () => {
       <div className="max-w-7xl w-full">
         <FloatingNav navItems={navItems} />
         <Hero />
-        {/* <Grid /> */}
+        <Grid />
         <RecentProjects />
         <Clients />
         <Experience />
