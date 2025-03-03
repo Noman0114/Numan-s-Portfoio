@@ -6,7 +6,6 @@ import {
   useScroll,
   useMotionValueEvent,
 } from "framer-motion";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 export const FloatingNav = ({
@@ -15,33 +14,37 @@ export const FloatingNav = ({
 }: {
   navItems: {
     name: string;
-    link: string;
+    targetId: string;
     icon?: JSX.Element;
   }[];
   className?: string;
 }) => {
   const { scrollYProgress } = useScroll();
 
-  // set true for the initial state so that nav bar is visible in the hero section
   const [visible, setVisible] = useState(true);
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
-    // Check if current is not undefined and is a number
     if (typeof current === "number") {
       let direction = current! - scrollYProgress.getPrevious()!;
-
       if (scrollYProgress.get() < 0.05) {
-        // also set true for the initial state
         setVisible(true);
       } else {
-        if (direction < 0) {
-          setVisible(true);
-        } else {
-          setVisible(false);
-        }
+        setVisible(direction < 0);
       }
     }
   });
+
+  // Smooth scroll to the target section
+  const handleScroll = (targetId: string) => {
+  const targetElement = document.getElementById(targetId);
+  if (targetElement) {
+    const yOffset = -80; // Adjust this value based on your nav height
+    const y = targetElement.getBoundingClientRect().top + window.scrollY + yOffset;
+    
+    window.scrollTo({ top: y, behavior: "smooth" });
+  }
+};
+
 
   return (
     <AnimatePresence mode="wait">
@@ -58,9 +61,6 @@ export const FloatingNav = ({
           duration: 0.2,
         }}
         className={cn(
-          // change rounded-full to rounded-lg
-          // remove dark:border-white/[0.2] dark:bg-black bg-white border-transparent
-          // change  pr-2 pl-8 py-2 to px-10 py-5
           "flex max-w-fit md:min-w-[70vw] lg:min-w-fit fixed z-[5000] top-10 inset-x-0 mx-auto px-10 py-5 rounded-lg border border-black/.1 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] items-center justify-center space-x-4",
           className
         )}
@@ -71,47 +71,18 @@ export const FloatingNav = ({
           border: "1px solid rgba(255, 255, 255, 0.125)",
         }}
       >
-        <Link
-          href="#about"
-          className={cn(
-            "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
-          )}
-        >
-          <span className="block sm:hidden">📖</span>
-          <span className="text-sm !cursor-pointer">About</span>
-        </Link>
-        <Link
-          href="#projects"
-          className={cn(
-            "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
-          )}
-        >
-          <span className="block sm:hidden">💼</span>
-          <span className="text-sm !cursor-pointer">Projects</span>
-        </Link>
-        <Link
-          href="#experience"
-          className={cn(
-            "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
-          )}
-        >
-          <span className="block sm:hidden">🛠️</span>
-          <span className="text-sm !cursor-pointer">Experience</span>
-        </Link>
-        <Link
-          href="#contact"
-          className={cn(
-            "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
-          )}
-        >
-          <span className="block sm:hidden">📞</span>
-          <span className="text-sm !cursor-pointer">Contact</span>
-        </Link>
-        {/* remove this login btn */}
-        {/* <button className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full">
-          <span>Login</span>
-          <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent  h-px" />
-        </button> */}
+        {navItems.map(({ name, targetId, icon }) => (
+          <button
+            key={name}
+            onClick={() => handleScroll(targetId)}
+            className={cn(
+              "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
+            )}
+          >
+            {icon && <span className="block sm:hidden">{icon}</span>}
+            <span className="text-sm !cursor-pointer">{name}</span>
+          </button>
+        ))}
       </motion.div>
     </AnimatePresence>
   );
