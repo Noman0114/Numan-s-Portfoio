@@ -1,8 +1,8 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useLayoutEffect } from "react";
 
-export const BackgroundGradientAnimation = ({
+const BackgroundGradientAnimation = ({
   gradientBackgroundStart = "rgb(108, 0, 162)",
   gradientBackgroundEnd = "rgb(0, 17, 82)",
   firstColor = "18, 113, 255",
@@ -41,10 +41,14 @@ export const BackgroundGradientAnimation = ({
   const [tgY, setTgY] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setIsMounted(true);
+  }, []);
 
-    if (typeof document !== "undefined") {
+  useEffect(() => {
+    if (!isMounted || typeof window === "undefined") return;
+
+    const setBodyProperties = () => {
       document.body.style.setProperty(
         "--gradient-background-start",
         gradientBackgroundStart
@@ -61,8 +65,22 @@ export const BackgroundGradientAnimation = ({
       document.body.style.setProperty("--pointer-color", pointerColor);
       document.body.style.setProperty("--size", size);
       document.body.style.setProperty("--blending-value", blendingValue);
-    }
-  }, []);
+    };
+
+    setBodyProperties();
+  }, [
+    isMounted,
+    gradientBackgroundStart,
+    gradientBackgroundEnd,
+    firstColor,
+    secondColor,
+    thirdColor,
+    fourthColor,
+    fifthColor,
+    pointerColor,
+    size,
+    blendingValue,
+  ]);
 
   useEffect(() => {
     if (!isMounted) return;
@@ -200,3 +218,5 @@ export const BackgroundGradientAnimation = ({
     </div>
   );
 };
+
+export { BackgroundGradientAnimation };

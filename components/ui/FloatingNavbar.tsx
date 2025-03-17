@@ -28,6 +28,8 @@ export const FloatingNav = ({
   }, []);
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
+    if (!isMounted) return;
+
     if (typeof current === "number") {
       let direction = current! - scrollYProgress.getPrevious()!;
       if (scrollYProgress.get() < 0.05) {
@@ -40,7 +42,7 @@ export const FloatingNav = ({
 
   // Smooth scroll to the target section
   const handleScroll = (targetId: string) => {
-    if (!isMounted || typeof document === "undefined") return;
+    if (!isMounted || typeof window === "undefined") return;
 
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
@@ -51,6 +53,8 @@ export const FloatingNav = ({
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
+
+  if (!isMounted) return null;
 
   return (
     <AnimatePresence mode="wait">

@@ -1,14 +1,24 @@
 "use client";
 import { useState, useEffect } from "react";
 import { IoCopyOutline } from "react-icons/io5";
-
-// Also install this npm i --save-dev @types/react-lottie
-import Lottie from "react-lottie";
-
+import dynamic from "next/dynamic";
 import { cn } from "@/lib/utils";
 
-import { BackgroundGradientAnimation } from "./GradientBg";
-import GridGlobe from "./GridGlobe";
+const Lottie = dynamic(() => import("react-lottie"), {
+  ssr: false,
+});
+
+const BackgroundGradientAnimation = dynamic(
+  () => import("./GradientBg").then((m) => m.BackgroundGradientAnimation),
+  {
+    ssr: false,
+  }
+);
+
+const GridGlobe = dynamic(() => import("./GridGlobe"), {
+  ssr: false,
+});
+
 import animationData from "@/data/confetti.json";
 import MagicButton from "../MagicButton";
 
@@ -74,12 +84,18 @@ export const BentoGridItem = ({
   };
 
   const handleCopy = () => {
-    if (typeof navigator !== "undefined") {
-      const text = "numanahmad0114@gmail.com";
-      navigator.clipboard.writeText(text);
+    if (typeof window === "undefined") return;
+
+    const text = "numanahmad0114@gmail.com";
+    navigator.clipboard.writeText(text).then(() => {
       setCopied(true);
-    }
+    });
   };
+
+  // Don't render anything until mounted
+  if (!isMounted) {
+    return null;
+  }
 
   // Determine grid span classes based on id
   const getGridSpanClasses = () => {
