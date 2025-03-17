@@ -1,7 +1,7 @@
-'use client'
+"use client";
 import { gridItems } from "@/data";
-import { BentoGrid, BentoGridItem } from "./ui/BentoGrid";
-
+import { BentoGridItem } from "./ui/BentoGrid";
+import BentoGrid from "@/components/ui/GentoGrid";
 const Grid = () => {
   return (
     <section id="about">

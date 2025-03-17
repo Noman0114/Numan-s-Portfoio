@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   motion,
   AnimatePresence,
@@ -20,8 +20,12 @@ export const FloatingNav = ({
   className?: string;
 }) => {
   const { scrollYProgress } = useScroll();
-
   const [visible, setVisible] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
     if (typeof current === "number") {
@@ -36,15 +40,17 @@ export const FloatingNav = ({
 
   // Smooth scroll to the target section
   const handleScroll = (targetId: string) => {
-  const targetElement = document.getElementById(targetId);
-  if (targetElement) {
-    const yOffset = -80; // Adjust this value based on your nav height
-    const y = targetElement.getBoundingClientRect().top + window.scrollY + yOffset;
-    
-    window.scrollTo({ top: y, behavior: "smooth" });
-  }
-};
+    if (!isMounted || typeof document === "undefined") return;
 
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      const yOffset = -80; // Adjust this value based on your nav height
+      const y =
+        targetElement.getBoundingClientRect().top + window.scrollY + yOffset;
+
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
 
   return (
     <AnimatePresence mode="wait">

@@ -50,6 +50,14 @@ const ChatIcon = () => {
     }
   };
   useEffect(() => {
+    // Only run in browser environment
+    if (
+      typeof window === "undefined" ||
+      !isModalOpen ||
+      typeof document === "undefined"
+    )
+      return;
+
     const handleClickOutside = (event: MouseEvent) => {
       if (
         modalRef.current &&
@@ -59,9 +67,7 @@ const ChatIcon = () => {
       }
     };
 
-    if (isModalOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);

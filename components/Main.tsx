@@ -15,21 +15,21 @@ const Main = () => {
   return (
     <main className="relative bg-black-100 flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
       <div className="max-w-7xl w-full">
-       <FloatingNav
-  navItems={[
-    { name: "About", targetId: "about", icon: <>📖</> },
-    { name: "Projects", targetId: "projects", icon: <>💼</> },
-    { name: "Experience", targetId: "experience", icon: <>🛠️</> },
-    { name: "Contact", targetId: "contact", icon: <>📞</> },
-  ]}
-/>
+        <FloatingNav
+          navItems={[
+            { name: "About", targetId: "about", icon: <>📖</> },
+            { name: "Projects", targetId: "projects", icon: <>💼</> },
+            { name: "Experience", targetId: "experience", icon: <>🛠️</> },
+            { name: "Contact", targetId: "contact", icon: <>📞</> },
+          ]}
+        />
 
         <Hero />
         {/* <Grid /> */}
         <h1 className="heading mt-6">
-        A small selection of{" "}
-        <span className="text-purple">recent projects</span>
-      </h1>
+          A small selection of{" "}
+          <span className="text-purple">recent projects</span>
+        </h1>
         <RecentProjects />
         <Clients />
         <Experience />
