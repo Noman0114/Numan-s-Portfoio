@@ -26,10 +26,10 @@ const Main = () => {
 
         <Hero />
         <Grid />
-        <h1 className="heading mt-6">
+        {/* <h1 className="heading mt-6">
           A small selection of{" "}
           <span className="text-purple">recent projects</span>
-        </h1>
+        </h1> */}
         <RecentProjects />
         <Clients />
         <Experience />
