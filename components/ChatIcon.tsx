@@ -13,38 +13,88 @@ const ChatIcon = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [chatHistory, setChatHistory] = useState<
-    { type: "user" | "ai"; message: string }[]
+    { type: "user" | "ai"; message: string; id?: string; isLoading?: boolean }[]
   >([]);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
 
   const modalRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Add scroll to bottom effect
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, [chatHistory]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim() || isLoading) return;
 
     const userMessage = message;
+
+    const prompt = `You are an AI assistant designed to provide information about Numan Ahmad, a software engineer from COMSATS. Numan is currently working as a full-stack web developer at Fista Solutions in Faisalabad. His expertise includes Next.js, Node.js, React.js, Express.js, Python, JavaScript, FastAPI, and LiteLLM.  
+
+When a user asks about Numan's projects, provide the GitHub link: "https://github.com/Noman0114".  
+If the user asks about anything not mentioned here, provide the LinkedIn link: "https://www.linkedin.com/in/numan-ahmad-b09a31276/".  
+If the user asks about anything unrelated to Numan Ahmad, instruct them to ask only about him.  
+
+### Variable:  
+**User Message ${userMessage} **  This contains the question asked by the user, which should be processed based on the above guidelines.If the msg is not related to Numan Ahmad, then provide the LinkedIn link: "https://www.linkedin.com/in/numan-ahmad-b09a31276/".`;
     setMessage("");
     setChatHistory((prev) => [...prev, { type: "user", message: userMessage }]);
     setIsLoading(true);
 
-    try {
-      const result = await model.generateContent(userMessage);
-      const response = await result.response;
-      const text = response.text();
+    // Add a temporary loading message
+    const loadingId = Date.now().toString();
+    setChatHistory((prev) => [
+      ...prev,
+      { type: "ai", message: "...", id: loadingId, isLoading: true },
+    ]);
 
-      setChatHistory((prev) => [...prev, { type: "ai", message: text }]);
+    try {
+      // Format the chat history for Gemini
+      const formattedHistory = chatHistory.map((entry) => ({
+        role: entry.type === "user" ? "user" : "model",
+        parts: [{ text: entry.message }],
+      }));
+
+      // Create a chat session
+      const chat = model.startChat({
+        history: formattedHistory,
+      });
+
+      // Send the prompt to the AI instead of just the user message
+      const result = await chat.sendMessage(prompt);
+      const text = result.response.text();
+
+      // Replace the loading message with the actual response
+      setChatHistory((prev) =>
+        prev.map((msg: any) =>
+          msg.id === loadingId
+            ? { type: "ai", message: text, id: loadingId, isLoading: false }
+            : msg
+        )
+      );
     } catch (error) {
       console.error("Error generating response:", error);
-      setChatHistory((prev) => [
-        ...prev,
-        {
-          type: "ai",
-          message: "Sorry, I encountered an error. Please try again.",
-        },
-      ]);
+
+      // Replace loading message with error message
+      setChatHistory((prev) =>
+        prev.map((msg: any) =>
+          msg.id === loadingId
+            ? {
+                type: "ai",
+                message: "Sorry, I encountered an error. Please try again.",
+                id: loadingId,
+                isLoading: false,
+              }
+            : msg
+        )
+      );
     } finally {
       setIsLoading(false);
     }
@@ -123,17 +173,28 @@ const ChatIcon = () => {
               </div>
 
               {/* Chat Messages */}
-              <div className="flex-1 overflow-y-auto px-4 py-2 space-y-4">
+              <div
+                ref={chatContainerRef}
+                className="flex-1 overflow-y-auto px-4 py-2 space-y-4"
+              >
                 {chatHistory.map((chat, index) => (
                   <div
-                    key={index}
+                    key={chat.id || index}
                     className={`p-3 rounded-lg ${
                       chat.type === "user"
                         ? "bg-blue-600 bg-opacity-70 ml-auto mr-2 max-w-[80%]"
                         : "bg-gray-700 bg-opacity-70 mr-auto ml-2 max-w-[80%]"
                     }`}
                   >
-                    {chat.message}
+                    {chat.isLoading ? (
+                      <div className="typing-indicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                      </div>
+                    ) : (
+                      chat.message
+                    )}
                   </div>
                 ))}
               </div>
